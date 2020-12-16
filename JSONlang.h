@@ -74,17 +74,17 @@ public:
 	}
 
 
-	bool operator ==(const JSON& make);
+	bool operator ==(const JSON& json);
 
-	bool operator !=(const JSON& make);
+	bool operator !=(const JSON& json);
 
-	bool operator <=(const JSON& make);
+	bool operator <=(const JSON& json);
 
-	bool operator <(const JSON& make);
+	bool operator <(const JSON& json);
 
-	bool operator >(const JSON& make);
+	bool operator >(const JSON& json);
 
-	bool operator >=(const JSON& make);
+	bool operator >=(const JSON& json);
 
 	void pushToList(JSON a) {
 		list.push_back(a);
