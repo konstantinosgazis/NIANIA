@@ -5,6 +5,7 @@
 #include <vector>
 #include <initializer_list>
 #include <cstdarg> //For variaditic functions (Mutiltiple arguments)
+#include "boost/variant.hpp"
 
 
 using std::cout;
@@ -15,7 +16,7 @@ using std::vector;
 
 class JSON {
 private:
-	double number;
+	int number;
 	const char* word;
 	bool boolean;
 	vector<JSON> list;
@@ -27,7 +28,7 @@ public:
 		std::cout << "Called json empty constructor" << std::endl;
 	}
 
-	JSON(double num) {
+	JSON(int num) {
 		std::cout << "Constructor int  called" << std::endl;
 		number = num;
 		word = NULL;
@@ -60,7 +61,7 @@ public:
 		array = list;
 	}
 
-	inline double getNumber() const {
+	inline int getNumber() const {
 		return number;
 	}
 
@@ -104,7 +105,6 @@ public:
 
 	void setValueArray(int index,JSON value){
 		this->array.at(index)= value;
-		//this->array[index] = value;
 	}
 	
 	vector<JSON>::iterator begin() {
@@ -124,6 +124,13 @@ public:
 JSON operator, (JSON b1, JSON b2);
 std::ostream & operator << (std::ostream& stream, const JSON& m);
 
+class OBJECT :public JSON{
+	private:
+		
+	public:
+
+
+};
 
 class LIST :public JSON {
 private:

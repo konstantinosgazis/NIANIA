@@ -2,9 +2,8 @@
 #include "defines.h"
 PROGRAM_BEGIN
 
-JSON(emptyObj) = new ARRAY{
-    (NUMBER:21),(NUMBER:12),(NUMBER:19),(NUMBER:18)
-    ,(NUMBER:45),(NUMBER:60),(NUMBER:85),(NUMBER:113)
-}
+JSON(emptyObj) = STRING("21");
+JSON(emptyObj1) = NUMBER(21);
+JSON(emptyObj2) = BOOLEAN(true);
 
 PROGRAM_END

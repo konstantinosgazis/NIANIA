@@ -5,11 +5,11 @@
 
 #define PROGRAM_END ; return 0; }
 
-#define NUMBER (false)?0
+#define NUMBER(x) JSON(x);
 
-#define WORD (false)?NULL
+#define STRING(x) JSON(x);
 
-#define BOOLEAN (false)?false
+#define BOOLEAN(x) JSON(x);
 
 #define PRINT(x) print(x);
 
