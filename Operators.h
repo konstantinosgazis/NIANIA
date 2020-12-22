@@ -1,0 +1,23 @@
+#include "JSONlang.h"
+bool operator== (Variable left , Variable right)    {return -1;}
+bool operator!= (Variable left , Variable right)    {return -1;}
+bool operator<  (Variable left , Variable right)    {return -1;}
+bool operator>  (Variable left , Variable right)    {return -1;}
+bool operator<= (Variable left , Variable right)    {return -1;}
+bool operator>= (Variable left , Variable right)    {return -1;}
+// Variable operator+  (Variable left , Variable right)    {return;}
+// Variable operator-  (Variable left , Variable right)    {return;}
+// Variable operator*  (Variable left , Variable right)    {return;}
+// Variable operator/  (Variable left , Variable right)    {return;}
+// Variable operator%  (Variable left , Variable right)    {return;}
+bool operator== (Variable left , int  right)    {return -1;}
+bool operator!= (Variable left , int  right)    {return -1;}
+bool operator<  (Variable left , int  right)    {return -1;}
+bool operator>  (Variable left , int  right)    {return -1;}
+bool operator<= (Variable left , int  right)    {return -1;}
+bool operator>= (Variable left , int  right)    {return -1;}
+// Variable operator+  (Variable left , int  right)    {return;}
+// Variable operator-  (Variable left , int  right)    {return;}
+// Variable operator*  (Variable left , int  right)    {return;}
+// Variable operator/  (Variable left , int  right)    {return;}
+// Variable operator%  (Variable left , int  right)    {return;}

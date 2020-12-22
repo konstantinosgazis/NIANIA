@@ -5,13 +5,21 @@
 
 #define PROGRAM_END ; return 0; }
 
-#define NUMBER(x) JSON(x);
+#define TRUE true
 
-#define STRING(x) JSON(x);
+#define FALSE false
 
-#define BOOLEAN(x) JSON(x);
+#define JSON(x) Variable(x)
 
-#define PRINT(x) print(x);
+#define NUMBER(x) Number(x);
+
+#define STRING(x) String(x);
+
+#define BOOLEAN(x) Boolean(x);
+
+#define ARRAY (*(new Array()))
+
+#define PRINT(x) ;print(x)
 
 #define AND &&
 

@@ -4,9 +4,6 @@
 #include <string>
 #include <vector>
 #include <initializer_list>
-#include <cstdarg> //For variaditic functions (Mutiltiple arguments)
-#include "boost/variant.hpp"
-
 
 using std::cout;
 using std::cerr;
@@ -14,54 +11,43 @@ using std::endl;
 using std::string;
 using std::vector;
 
-class JSON {
-private:
-	int number;
+enum Type{
+	NUMBER,
+	WORD,
+	BOOLEAN,
+	OBJECT,
+	ARRAY,
+	UNDEFINED
+};
+
+class Variable {
+protected:
+	Type type;
+	double number;
 	const char* word;
 	bool boolean;
-	vector<JSON> list;
-	vector <JSON> array;
+	vector<Variable> list;
 public:
+	vector <Variable>* array;
 
 
-	JSON() {
+	Variable() {
 		std::cout << "Called json empty constructor" << std::endl;
-	}
-
-	JSON(int num) {
-		std::cout << "Constructor int  called" << std::endl;
-		number = num;
+		type = UNDEFINED;
+		number = NULL;
 		word = NULL;
 		boolean = NULL;
 	}
 
-	JSON(const char*  w) {
-		std::cout << "Called char * constrctor" << std::endl;
-		word = w;
-		number = NULL;
-		boolean = NULL;
+	void setType(Type t){
+		this->type = t;
 	}
 
-	JSON(string a) {
-		std::cout << "Called char * constrctor" << std::endl;
-		word = a.c_str();
-		number = NULL;
-		boolean = NULL;
+	inline Type getType(){
+		return type;
 	}
-
-	JSON(bool b) {
-		std::cout << "Called boolean constructor" << std::endl;
-		boolean = b;
-		word = NULL;
-		number = NULL;
-	}
-
-
-	void setArray(std::initializer_list<JSON> list) {
-		array = list;
-	}
-
-	inline int getNumber() const {
+	
+	inline double getNumber() const {
 		return number;
 	}
 
@@ -73,20 +59,7 @@ public:
 		return word;
 	}
 
-
-	bool operator ==(const JSON& json);
-
-	bool operator !=(const JSON& json);
-
-	bool operator <=(const JSON& json);
-
-	bool operator <(const JSON& json);
-
-	bool operator >(const JSON& json);
-
-	bool operator >=(const JSON& json);
-
-	void pushToList(JSON a) {
+	void pushToList(Variable a) {
 		list.push_back(a);
 	}
 
@@ -94,95 +67,126 @@ public:
 		list.clear();
 	}
 
-	vector<JSON> getList() const {
-		return list;
+	vector<Variable> *getArray() const {
+		return this->array;
 	}
 
-	vector<JSON>& getArray()  {
-		return array;
+	void setArray(vector <Variable>* array)  {
+		this->array = array;
 
 	}
 
-	void setValueArray(int index,JSON value){
-		this->array.at(index)= value;
-	}
+	// void setValueArray(int index,JSON value){
+	// 	this->array.at(index)= value;
+	// }
 	
-	vector<JSON>::iterator begin() {
-		return list.begin();
+	vector<Variable>::iterator begin() {
+		return array->begin();
 	}
-	vector<JSON>::iterator end() {
-		return list.end();
-	}
-
-	void insert_front_bookList(JSON make) {
-		list.insert(list.begin(), make);
+	vector<Variable>::iterator end() {
+		return array->end();
 	}
 
-
+	// void insert_front_bookList(JSON make) {
+	// 	list.insert(list.begin(), make);
+	// }
 };
 
-JSON operator, (JSON b1, JSON b2);
-std::ostream & operator << (std::ostream& stream, const JSON& m);
-
-class OBJECT :public JSON{
+class Number : public Variable {
 	private:
-		
 	public:
-
-
-};
-
-class LIST :public JSON {
-private:
-	//vector<MAKE> list;
-public:
-	LIST &operator[](JSON make);
-};
-
-class SENTENCE :public JSON {
-private:
-	//vector<MAKE> list;
-public:
-	template <class T>
-	SENTENCE(T t) {
-		JSON temp = (JSON)t;
-		if (temp.getWord() == NULL) {
-			cerr << "No string object to insert" << endl;
-			return;
-		}
-		pushToList(temp);
+	Number(double n){
+		std::cout << "Called int constructor " << std::endl;
+		setType(NUMBER);
+		number = n;
 	}
-	template <class T, class... T2>
-	SENTENCE(T t, T2... rest):SENTENCE(rest...)
+};
+
+
+class String : public Variable {
+	private:
+	public:
+	String(char* s){
+		std::cout << "Called string constructor " << std::endl;
+		setType(WORD);
+		word = s;
+	}
+};
+
+class Boolean : public Variable {
+	private:
+	public:
+	Boolean(bool b){
+		std::cout << "Called boolean constructor " << std::endl;
+		setType(BOOLEAN);
+		boolean = b;
+	}
+};
+
+class Array: public Variable{
+	public:
+    vector<Variable> arr;
+    Array()
 	{
-		JSON temp = (JSON)t;
-		if (temp.getWord() == NULL) {
-			cerr << "No string object to insert" << endl;
-			return;
-		}
-		insert_front_bookList(temp);
+		std::cout << "Called Array constructor " << std::endl;
+		setType(ARRAY);
 	}
+    Array operator[](vector<Variable>* v){
+        setType(ARRAY);
+        setArray(v);
+        return *this;
+    }
+    Array operator[](Variable h){
+        vector<Variable>* v = new vector<Variable>();
+        v->push_back(h);
+        setType(ARRAY);
+        setArray(v);
+        return *this;
+    }
 };
 
 
-class ARRAY :public JSON {
-private:
-	
-public:
-	ARRAY(std::initializer_list<JSON> list) {
-		setArray(list);
-	}
-};
-
-void print(JSON json)
+void print(Variable json)
 {
-    const char* word = json.getWord();
-	if (word != NULL) {
-		cout << word << endl;
-	}
-	else {
-		std::cerr << "You can only draw const char *" << endl;
-		return ;
+	switch(json.getType())
+	{
+		case 0:{					// NUMBER
+			cout << json.getNumber() << endl;
+			break;
+		}
+		case 1:{					//WORD
+			cout << json.getWord() << endl;
+			break;
+		}
+		case 2:{					//BOOLEAN
+			cout<< ( json.getBool() ? "true" : "false" ) <<endl;
+			break;
+		}
+		case 3:{					//OBJECT
+
+			break;
+		}
+		case 4:{					//ARRAY
+			if(json.array->empty()) 
+			{
+				cout << "Empty array!" <<endl;
+				return;
+			}
+			string sb = "{";
+			for(int i=0; i<json.array->size();i++){
+				(*json.array)[i];
+			}
+			sb+="}";
+			break;
+		}
+		case 5:{					//UNDEFINED
+			cout<<"undefined"<<endl;
+			break;
+		}
+		default: {					//DEFAULT 
+			cout<<"SHOULD NEVER REACH THIS POINT!!!"<<endl;
+			break;
+		}
 	}
 
 	return;
