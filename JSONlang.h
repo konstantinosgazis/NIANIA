@@ -83,16 +83,22 @@ public:
 		this->array = array;
 
 	}
-
 	// void setValueArray(int index,JSON value){
 	// 	this->array.at(index)= value;
 	// }
 	
-	vector<Variable>::iterator begin() {
+	auto begin() {
 		return array->begin();
 	}
-	vector<Variable>::iterator end() {
+	auto end() {
 		return array->end();
+	}
+	Variable& operator[] (size_t index){
+		return this->array->at(index);
+	}
+
+	Variable operator[] (size_t index) const{
+		return   (*const_cast<Variable*>(this))[index] ;
 	}
 
 	// void insert_front_bookList(JSON make) {

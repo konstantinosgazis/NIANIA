@@ -9,13 +9,13 @@
 
 #define FALSE false
 
-#define JSON(x) ;Variable(x)
+#define JSON ;Variable
 
-#define NUMBER(x) Number(x)
+#define NUMBER Number
 
-#define STRING(x) String(x)
+#define STRING String
 
-#define BOOLEAN(x) Boolean(x)
+#define BOOLEAN Boolean
 
 #define ARRAY (*(new Array()))
 
