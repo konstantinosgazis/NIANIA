@@ -10,6 +10,7 @@ using std::cerr;
 using std::endl;
 using std::string;
 using std::vector;
+using namespace std;
 
 enum Type{
 	NUMBER,
@@ -27,17 +28,24 @@ protected:
 	const char* word;
 	bool boolean;
 	vector<Variable> list;
-public:
 	vector <Variable>* array;
+public:
 
 
 	Variable() {
 		std::cout << "Called json empty constructor" << std::endl;
 		type = UNDEFINED;
-		number = NULL;
+		number = 0;
 		word = NULL;
 		boolean = NULL;
 	}
+    Variable(vector<Variable>* v){
+        this->array = new vector<Variable>();
+        this->type = ARRAY;
+        for(auto i : *v){
+            (this->array)->push_back(i);
+        }
+    }
 
 	void setType(Type t){
 		this->type = t;
@@ -90,6 +98,12 @@ public:
 	// void insert_front_bookList(JSON make) {
 	// 	list.insert(list.begin(), make);
 	// }
+
+	string toString()
+	{
+		return "Undefined";
+	}
+
 };
 
 class Number : public Variable {
@@ -100,17 +114,22 @@ class Number : public Variable {
 		setType(NUMBER);
 		number = n;
 	}
+
+	
+	string toString()	{return to_string(number);}
 };
 
 
 class String : public Variable {
 	private:
 	public:
-	String(char* s){
+	String(const char* s){
 		std::cout << "Called string constructor " << std::endl;
 		setType(WORD);
 		word = s;
 	}
+	
+	string toString(){ return word;}
 };
 
 class Boolean : public Variable {
@@ -121,16 +140,21 @@ class Boolean : public Variable {
 		setType(BOOLEAN);
 		boolean = b;
 	}
+
+	string toString(){ return to_string(boolean);}
 };
 
 class Array: public Variable{
 	public:
-    vector<Variable> arr;
     Array()
 	{
 		std::cout << "Called Array constructor " << std::endl;
 		setType(ARRAY);
 	}
+    Array(vector<Variable>* v){
+        setType(ARRAY);
+        setArray(v);
+    }
     Array operator[](vector<Variable>* v){
         setType(ARRAY);
         setArray(v);
@@ -145,51 +169,83 @@ class Array: public Variable{
     }
 };
 
-
-void print(Variable json)
+string toString(Variable json)
 {
-	switch(json.getType())
-	{
-		case 0:{					// NUMBER
-			cout << json.getNumber() << endl;
-			break;
+	switch(json.getType()){
+		case 0:{
+			return to_string(json.getNumber());
 		}
-		case 1:{					//WORD
-			cout << json.getWord() << endl;
-			break;
+		case 1:{
+			return json.getWord();
 		}
-		case 2:{					//BOOLEAN
-			cout<< ( json.getBool() ? "true" : "false" ) <<endl;
-			break;
+		case 2:{
+			return ( json.getBool() ? "true" : "false" );
 		}
-		case 3:{					//OBJECT
-
-			break;
+		case 3:{
+			return "OBJECT";
 		}
-		case 4:{					//ARRAY
-			if(json.array->empty()) 
-			{
-				cout << "Empty array!" <<endl;
-				return;
+		case 4:{
+			string sb = "[ ";
+			for(int i=0; i<json.getArray()->size();i++){
+				sb += toString( json.getArray()->at(i) ) +" ";
 			}
-			string sb = "{";
-			for(int i=0; i<json.array->size();i++){
-				(*json.array)[i];
-			}
-			sb+="}";
-			break;
+			sb+="]";
+			return sb;
 		}
-		case 5:{					//UNDEFINED
-			cout<<"undefined"<<endl;
-			break;
+		case 5:{
+			return "Undefined";
 		}
-		default: {					//DEFAULT 
-			cout<<"SHOULD NEVER REACH THIS POINT!!!"<<endl;
-			break;
-		}
+		default:
+			return "SHOULD NEVER REACH THIS POINT!!!";
 	}
-
-	return;
+}
+void print(Variable json){
+	cout << toString(json) << endl;
 }
 
+// void print(Variable json)
+// {
+// 	switch(json.getType())
+// 	{
+// 		case 0:{					// NUMBER
+// 			cout << json.getNumber() << endl;
+// 			break;
+// 		}
+// 		case 1:{					//WORD
+// 			cout << json.getWord() << endl;
+// 			break;
+// 		}
+// 		case 2:{					//BOOLEAN
+// 			cout<< ( json.getBool() ? "true" : "false" ) <<endl;
+// 			break;
+// 		}
+// 		case 3:{					//OBJECT
+
+// 			break;
+// 		}
+// 		case 4:{					//ARRAY
+// 			if(json.array->empty()) 
+// 			{
+// 				cout << "Empty array!" <<endl;
+// 				return;
+// 			}
+// 			string sb = "{";
+// 			for(int i=0; i<json.array->size();i++){
+// 				sb+=(*json.array)[i].toString();
+// 			}
+// 			sb+="}\n";
+// 			break;
+// 		}
+// 		case 5:{					//UNDEFINED
+// 			cout<<"undefined"<<endl;
+// 			break;
+// 		}
+// 		default: {					//DEFAULT 
+// 			cout<<"SHOULD NEVER REACH THIS POINT!!!"<<endl;
+// 			break;
+// 		}
+// 	}
+
+// 	return;
+// }
 #endif //JSONLANG_H

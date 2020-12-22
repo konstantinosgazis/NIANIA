@@ -9,38 +9,28 @@
 
 #define FALSE false
 
-#define JSON(x) Variable(x)
+#define JSON(x) ;Variable(x)
 
-#define NUMBER(x) Number(x);
+#define NUMBER(x) Number(x)
 
-#define STRING(x) String(x);
+#define STRING(x) String(x)
 
-#define BOOLEAN(x) Boolean(x);
+#define BOOLEAN(x) Boolean(x)
 
 #define ARRAY (*(new Array()))
 
 #define PRINT(x) ;print(x)
-
-#define AND &&
-
-#define OR ||
-
-#define NOT ~
-
-#define IF if(
-
-#define ELSE_IF ;}else if(
-
-#define DO ){
-
-#define ELSE ;}else{
-
-#define END ;}
 
 #define RETURN return;
 
 #define cout std::cout;
 
 #define endl std::endl;
+
+#define SET ;
+
+#define ASSIGN =
+
+
 
 #endif //DEFINES_H
