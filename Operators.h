@@ -1,4 +1,5 @@
 #include "JSONlang.h"
+#include <cstring>
 
 bool operator== (Variable left , Variable right)    
 {
@@ -69,12 +70,29 @@ Variable operator>= (Variable left , Variable right)
 
 Variable operator+  (Variable left , Variable right)    
 {
-    if(left.getType() != NUMBER || right.getType() != NUMBER)
+    if(left.getType() == WORD && right.getType() == WORD)
     {
-        cout << "Task failed succesfully! Must add only numbers!" << endl;
-        exit(0);
+        const char* p = new char [strlen(left.getWord())+strlen(right.getWord())+1];
+        const char* s = new char [strlen(left.getWord())+strlen(right.getWord())+1];
+        strcat(const_cast<char*>(p),left.getWord());
+        strcat(const_cast<char*>(p),right.getWord());
+        strcpy(const_cast<char*>(s),p);
+        return *(new String(p));
     }
-    return *(new Number(right.getNumber() + left.getNumber()));
+    else if(left.getType() == NUMBER && right.getType() == NUMBER)
+    {
+        return *(new Number(left.getNumber() + right.getNumber()));
+    }
+    else if(left.getType() == ARRAY && right.getType() == ARRAY)
+    {
+        vector <Variable>* newarray = new vector<Variable>();
+        newarray->reserve(left.getArray()->size() + right.getArray()->size());
+        newarray->insert( newarray->end(), left.getArray()->begin(), left.getArray()->end() );
+        newarray->insert( newarray->end(), right.getArray()->begin(), right.getArray()->end() );
+        return newarray;
+    }
+    cout << "Task failed succesfully! Must add only numbers, strings, arrays or objects!" << endl;
+    exit(0);
 }
 
 Variable operator-  (Variable left , Variable right)    
