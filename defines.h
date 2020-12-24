@@ -23,10 +23,6 @@
 
 #define RETURN return;
 
-#define cout std::cout;
-
-#define endl std::endl;
-
 #define SET ;
 
 #define ASSIGN =
