@@ -3,11 +3,57 @@
 
 bool operator== (Variable left , Variable right)    
 {
-    return -1;
+    if(left.getType() != right.getType())
+    {
+        cout << "Task failed succesfully! Cannot set equal two differrent variables!" << endl;
+        exit(0);
+    }
+    switch(left.getType())
+    {
+        case 0://NUMBER
+            return left.getNumber() == right.getNumber();
+        case 1://STRING
+            return left.getWord() == right.getWord();
+        case 2://BOOLEAN
+            return left.getBool() == right.getBool();
+        case 3://OBJECT
+            return false;
+        case 4://ARRAY
+            return cmp(left.getArray(), right.getArray());
+        case 5://UNDEFINED
+            return false;
+        default:{//DEFAULT
+            cout << "SHOULD NEVER REACH THIS POINT!" <<endl;
+            return false;
+        }
+    }
 }
 bool operator!= (Variable left , Variable right)    
 {
-    return -1;
+    if(left.getType() != right.getType())
+    {
+        cout << "Task failed succesfully! Cannot set not equal two differrent variables!" << endl;
+        exit(0);
+    }
+    switch(left.getType())
+    {
+        case 0://NUMBER
+            return !(left.getNumber() == right.getNumber());
+        case 1://STRING
+            return !(left.getWord() == right.getWord());
+        case 2://BOOLEAN
+            return !(left.getBool() == right.getBool());
+        case 3://OBJECT
+            return false;
+        case 4://ARRAY
+            return false;
+        case 5://UNDEFINED
+            return false;
+        default:{//DEFAULT
+            cout << "SHOULD NEVER REACH THIS POINT!" <<endl;
+            return false;
+        }
+    }
 }
 
 Variable operator&& (Variable left, Variable right)

@@ -21,6 +21,8 @@ NUMBER(19),NUMBER(18.5),NUMBER(19)
 JSON(sum) = array1 + array2
 JSON(sum1) = emp + emp1
 
+;emp1 != emp
+
 SET week_temperatures[2] ASSIGN NUMBER(22)
 
 PRINT(emp)
