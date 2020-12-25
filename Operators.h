@@ -19,7 +19,7 @@ bool operator== (Variable left , Variable right)
         case 3://OBJECT
             return false;
         case 4://ARRAY
-            return cmp(left.getArray(), right.getArray());
+            return false;
         case 5://UNDEFINED
             return false;
         default:{//DEFAULT
@@ -237,4 +237,65 @@ vector<Variable>* operator,(Variable a, Variable b){
 vector<Variable>* operator,(vector<Variable>* a, Variable b){
     a->push_back(b);
     return a;
+}
+
+int Sizeof(Variable var)
+{
+    if(var.getType() == ARRAY) 
+    {
+        cout<< "Sizeof: " << var.getArray()->size() << endl;
+        return var.getArray()->size();
+    }
+        
+    else if(var.getType() == OBJECT)
+    {
+        return 0;
+    } 
+    cout << "Sizeof: " << 1 << endl;
+    return 1;
+}
+
+bool IsEmpty(Variable var)
+{
+    if(var.getType() == ARRAY && var.getArray()->empty())
+    {
+        cout << "Empty Array" << endl;
+        return true;
+    } 
+    if(var.getType() == ARRAY && !var.getArray()->empty())
+    {
+        cout << "Array not empty" << endl;
+        return false;
+    } 
+    else if(var.getType() == OBJECT){
+        return true;
+    }
+    return false;
+}
+
+string TypeOf(Variable var)
+{
+    switch(var.getType())
+    {
+        case 0:
+            cout << "Number" << endl;
+            return "Number";
+        case 1:
+            cout << "String" << endl;
+            return "String";
+        case 2:
+            cout << "Boolean" << endl;
+            return "Boolean";
+        case 3:
+            cout << "Object" << endl;
+            return "Object";
+        case 4:
+            cout << "Array" << endl;
+            return "Array";
+        case 5:
+            cout << "Undefined" << endl;  
+            return "Undefined";
+        default:
+            return "Should never reach this point!";
+    }
 }

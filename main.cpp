@@ -13,6 +13,8 @@ JSON(array2) = ARRAY[NUMBER(22), NUMBER(23)]
 
 JSON(t) = ARRAY [ ar , ARRAY [ num1 ] , ARRAY [ ar , ar]]
 
+JSON(empty) = ARRAY
+
 JSON(week_temperatures) = ARRAY [
 NUMBER(20),NUMBER(19.5),NUMBER(19),NUMBER(20),
 NUMBER(19),NUMBER(18.5),NUMBER(19)
@@ -21,9 +23,11 @@ NUMBER(19),NUMBER(18.5),NUMBER(19)
 JSON(sum) = array1 + array2
 JSON(sum1) = emp + emp1
 
-;emp1 != emp
-
 SET week_temperatures[2] ASSIGN NUMBER(22)
+
+SIZE_OF(emp)
+//IS_EMPTY(empty)
+TYPE_OF(emp)
 
 PRINT(emp)
 PRINT(num1)

@@ -31,7 +31,6 @@ public:
 
 
 	Variable() {
-		std::cout << "Called json empty constructor" << std::endl;
 		type = UNDEFINED;
 		number = 0;
 		word = NULL;
@@ -88,10 +87,7 @@ public:
 		return   (*const_cast<Variable*>(this))[index] ;
 	}
 
-	string toString()
-	{
-		return "Undefined";
-	}
+	
 
 };
 

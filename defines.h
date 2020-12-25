@@ -27,6 +27,10 @@
 
 #define ASSIGN =
 
+#define SIZE_OF(x) ;Sizeof(x)
 
+#define IS_EMPTY(x) ;IsEmpty(x)
+
+#define TYPE_OF(x) ;TypeOf(x)
 
 #endif //DEFINES_H
