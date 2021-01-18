@@ -1,0 +1,14 @@
+1)Simple Variables DONE
+2)ARRAYS DONE
+3)Operators DONE
+4)SET ASSSIGN DONE
+
+TODO
+1)Ta Object exoun alliwtiki sintaksi.Prepei epishs mesa sta object na 
+ylopoiithei to KEY("lala"):Variable.
+2)ERASE something.
+3)APPEND
+4)PRINT xwris tis parentheseis
+5)Oi operators tou == != prepei na tsekaroun anadromika ta arrays
+kai ta objects ean einai isa ta stoixeia tous.
+6)Oi boolean prepei na orizontai xwris ton contructor BOOLEAN(TRUE)
